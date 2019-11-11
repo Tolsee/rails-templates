@@ -91,7 +91,7 @@ insert_into_file 'app/javascript/packs/application.js', after: "require\(\"chann
   <<~EOT
 
     import 'translations/translations';
-    
+
     import 'initializers/';
     import 'screens/';
   EOT
@@ -198,14 +198,14 @@ after_bundle do
   insert_into_file 'config/webpack/environment.js', after: "const { environment } = require('@rails/webpacker')\n" do
     <<~EOT
       const webpack = require('webpack');
-      
+
       const plugins = [
         new webpack.ProvidePlugin({
           // Translations
           I18n: 'i18n-js',
         })
       ]
-  
+
       environment.config.set('plugins', plugins);
     EOT
   end
@@ -215,6 +215,15 @@ after_bundle do
     <<~EOT
       # Do not fallback to assets pipeline if a precompiled asset is missed.
       config.assets.compile = false
+
+    EOT
+  end
+
+  environment do
+    <<~EOT
+      config.i18n.available_locales = ENV.fetch('AVAILABLE_LOCALES').split(', ')
+      config.i18n.default_locale = ENV.fetch('DEFAULT_LOCALE')
+      config.i18n.fallbacks = ENV.fetch('FALLBACK_LOCALES').split(', ')
 
     EOT
   end
