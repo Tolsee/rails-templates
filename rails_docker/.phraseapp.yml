@@ -1,0 +1,15 @@
+# Just need to change the project_id and the tags (as YML file name) in the pull config
+phraseapp:
+  project_id: [PHRASE_APP_PROJECT_ID]
+  file_format: yml
+  push:
+    sources:
+    - file: ./config/locales/<tag>.<locale_name>.yml
+      params:
+        skip_upload_tags: true
+  pull:
+    targets:
+    - file: ./config/locales/<tag>.<locale_name>.yml
+      params:
+        include_empty_translations: true
+        tags: [PUT THE YML FILENAME HERE]
